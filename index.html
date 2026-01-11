@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>算法设计与分析 - 题目练习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .type-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .type-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .type-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .type-btn.active {
+            background-color: #2c3e50;
+        }
+
+        .question-card {
+            background-color: #ecf0f1;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .question-content {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background-color: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #3498db;
+            background-color: #f0f8ff;
+        }
+
+        .option.selected {
+            border-color: #3498db;
+            background-color: #e8f4fc;
+        }
+
+        .option.correct {
+            border-color: #27ae60;
+            background-color: #d4edda;
+        }
+
+        .option.incorrect {
+            border-color: #e74c3c;
+            background-color: #f8d7da;
+        }
+
+        .fill-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .fill-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .submit-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #219653;
+        }
+
+        .submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .correct-answer {
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            color: #856404;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .nav-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .progress {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+            }
+
+            .type-btn {
+                padding: 8px 15px;
+                margin: 0 5px;
+                font-size: 14px;
+            }
+
+            .question-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .question-number {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .question-content {
+                font-size: 16px;
+                margin-bottom: 15px;
+                line-height: 1.6;
+            }
+
+            .option {
+                padding: 10px 12px;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+
+            .fill-input {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+
+            .feedback {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .correct-answer {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .type-selector {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .type-btn {
+                margin: 5px 0;
+                width: 80%;
+            }
+
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                margin: 5px 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>算法设计与分析 - 题目练习</h1>
+        
+        <div class="type-selector">
+            <button class="type-btn active" data-type="选择题">选择题</button>
+            <button class="type-btn" data-type="填空题">填空题</button>
+            <button class="type-btn" data-type="判断题">判断题</button>
+        </div>
+
+        <div class="progress">
+            <span id="current-question">第1题</span> / <span id="total-questions">0题</span>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">
+                <span id="question-type">选择题</span> - <span id="question-index">1</span>
+            </div>
+            <div class="question-content" id="question-content">
+                加载题目中...
+            </div>
+            
+            <!-- 选择题选项 -->
+            <div class="options" id="options-container" style="display: none;">
+                <!-- 选项将通过JavaScript动态生成 -->
+            </div>
+            
+            <!-- 填空题输入框 -->
+            <input type="text" class="fill-input" id="fill-input" placeholder="请输入答案" style="display: none;">
+            
+            <!-- 判断题选项 -->
+            <div class="options" id="true-false-container" style="display: none;">
+                <div class="option" data-value="正确">√ 正确</div>
+                <div class="option" data-value="错误">× 错误</div>
+            </div>
+            
+            <button class="submit-btn" id="submit-btn">提交答案</button>
+            
+            <div class="feedback" id="feedback" style="display: none;"></div>
+            <div class="correct-answer" id="correct-answer" style="display: none;"></div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" disabled>上一题</button>
+            <button class="nav-btn" id="next-btn" disabled>下一题</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

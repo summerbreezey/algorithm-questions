@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手机访问说明</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .code {
+            font-family: monospace;
+            background-color: #eee;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .note {
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>手机访问算法题目小程序说明</h1>
+    
+    <div class="section">
+        <h2>步骤1：确保电脑和手机在同一网络</h2>
+        <p>请确保您的电脑和手机连接到同一个WiFi网络。</p>
+    </div>
+    
+    <div class="section">
+        <h2>步骤2：获取电脑的IP地址</h2>
+        <p>在Windows上，打开命令提示符（cmd）并输入：</p>
+        <p class="code">ipconfig</p>
+        <p>找到"无线局域网适配器 WLAN"下的"IPv4地址"，通常格式为 <code>192.168.x.x</code></p>
+    </div>
+    
+    <div class="section">
+        <h2>步骤3：在手机浏览器中访问</h2>
+        <p>在手机浏览器中输入以下地址（替换为您电脑的IP地址）：</p>
+        <p class="code">http://您的电脑IP地址:8000/index.html</p>
+        <p>例如：<code>http://192.168.1.100:8000/index.html</code></p>
+    </div>
+    
+    <div class="section">
+        <h2>常见问题</h2>
+        <p><strong>Q：手机无法访问？</strong></p>
+        <p>A：请检查：</p>
+        <ul>
+            <li>电脑和手机是否在同一网络</li>
+            <li>HTTP服务器是否正常运行（端口8000）</li>
+            <li>Windows防火墙是否允许端口8000的访问</li>
+        </ul>
+        
+        <p><strong>Q：题目加载失败？</strong></p>
+        <p>A：请检查questions.json文件是否存在，以及路径是否正确。</p>
+    </div>
+    
+    <div class="section">
+        <p class="note">注意：如果您使用的是移动网络（4G/5G），将无法访问本地服务器。</p>
+    </div>
+</body>
+</html>
